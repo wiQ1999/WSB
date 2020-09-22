@@ -1,0 +1,13 @@
+E:\Programowanie\C#\Obiektówka\TicTacToeConsole\TicTacToeConsole\bin\Debug\netcoreapp3.1\TicTacToeConsole.exe
+E:\Programowanie\C#\Obiektówka\TicTacToeConsole\TicTacToeConsole\bin\Debug\netcoreapp3.1\TicTacToeConsole.deps.json
+E:\Programowanie\C#\Obiektówka\TicTacToeConsole\TicTacToeConsole\bin\Debug\netcoreapp3.1\TicTacToeConsole.runtimeconfig.json
+E:\Programowanie\C#\Obiektówka\TicTacToeConsole\TicTacToeConsole\bin\Debug\netcoreapp3.1\TicTacToeConsole.runtimeconfig.dev.json
+E:\Programowanie\C#\Obiektówka\TicTacToeConsole\TicTacToeConsole\bin\Debug\netcoreapp3.1\TicTacToeConsole.dll
+E:\Programowanie\C#\Obiektówka\TicTacToeConsole\TicTacToeConsole\bin\Debug\netcoreapp3.1\TicTacToeConsole.pdb
+E:\Programowanie\C#\Obiektówka\TicTacToeConsole\TicTacToeConsole\obj\Debug\netcoreapp3.1\TicTacToeConsole.csprojAssemblyReference.cache
+E:\Programowanie\C#\Obiektówka\TicTacToeConsole\TicTacToeConsole\obj\Debug\netcoreapp3.1\TicTacToeConsole.AssemblyInfoInputs.cache
+E:\Programowanie\C#\Obiektówka\TicTacToeConsole\TicTacToeConsole\obj\Debug\netcoreapp3.1\TicTacToeConsole.AssemblyInfo.cs
+E:\Programowanie\C#\Obiektówka\TicTacToeConsole\TicTacToeConsole\obj\Debug\netcoreapp3.1\TicTacToeConsole.csproj.CoreCompileInputs.cache
+E:\Programowanie\C#\Obiektówka\TicTacToeConsole\TicTacToeConsole\obj\Debug\netcoreapp3.1\TicTacToeConsole.dll
+E:\Programowanie\C#\Obiektówka\TicTacToeConsole\TicTacToeConsole\obj\Debug\netcoreapp3.1\TicTacToeConsole.pdb
+E:\Programowanie\C#\Obiektówka\TicTacToeConsole\TicTacToeConsole\obj\Debug\netcoreapp3.1\TicTacToeConsole.genruntimeconfig.cache
