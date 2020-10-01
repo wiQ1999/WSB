@@ -1,42 +1,42 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using TicTacToeConsole.Interfaces;
 
 namespace TicTacToeConsole
 {
-	class Player
+	class Player : ICharacter
 	{
-		public string Name { get; set; }
-		public int Value { get; set; }
+		public string Name { get; }
+		public Character Character { get; }
 
-		public Player(string Name, int Value)
+		public Player(string a_Name, Character a_Character)
 		{
-			this.Name = Name;
-			this.Value = Value;
+			Name = a_Name;
+			Character = a_Character;
 		}
 
-		public Char GetChar()
+		public char GetCharacterChar()
 		{
-			switch (Value)
+			switch (Character)
 			{
-				case 1:
+				case Character.KOLKO:
 					return 'O';
-				case -1:
+				case Character.KRZYZYK:
 					return 'X';
+				default:
+					return ' ';
 			}
-			return ' ';
 		}
 
-		public string GetCharName()
+		public int GetCharacterValue()
 		{
-			switch (Value)
+			switch (Character)
 			{
-				case 1:
-					return "KÓLKO";
-				case -1:
-					return "KŻYRZYK";
+				case Character.KOLKO:
+					return 1;
+				case Character.KRZYZYK:
+					return -1;
+				default:
+					return 0;
 			}
-			return " ";
 		}
 	}
 }
