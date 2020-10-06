@@ -35,3 +35,4 @@ C:\Users\Rodzinka\Source\Repos\TicTacToeConsole\TicTacToeConsole\TicTacToeConsol
 C:\Users\Rodzinka\Source\Repos\TicTacToeConsole\TicTacToeConsole\TicTacToeConsole\obj\Debug\netcoreapp3.1\TicTacToeConsole.dll
 C:\Users\Rodzinka\Source\Repos\TicTacToeConsole\TicTacToeConsole\TicTacToeConsole\obj\Debug\netcoreapp3.1\TicTacToeConsole.pdb
 C:\Users\Rodzinka\Source\Repos\TicTacToeConsole\TicTacToeConsole\TicTacToeConsole\obj\Debug\netcoreapp3.1\TicTacToeConsole.genruntimeconfig.cache
+C:\Users\Rodzinka\Source\Repos\TicTacToeConsole\TicTacToeConsole\TicTacToeConsole\obj\Debug\netcoreapp3.1\TicTacToeConsole.csprojAssemblyReference.cache

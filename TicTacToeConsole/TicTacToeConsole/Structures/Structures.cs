@@ -1,4 +1,4 @@
-﻿public struct BoardPlace
+﻿public struct Coordinates
 {
 	public int X;
 	public int Y;

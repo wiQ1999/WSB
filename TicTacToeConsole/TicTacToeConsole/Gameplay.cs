@@ -7,6 +7,20 @@ namespace TicTacToeConsole
 {
 	class Gameplay : Board, IRules
 	{
+		private const int PlayerKOLKO_X = 5;
+		private const int PlayerKRZYZYK_X = 13;
+		private const int Players_Y = Header_Y + 2;
+
+		public Coordinates PlayerKOLKOInfoPlace
+        {
+			get => new Coordinates { X = PlayerKOLKO_X, Y = Players_Y };
+        }
+
+		public Coordinates PlayerKRZYZYKInfoPlace
+		{
+			get => new Coordinates { X = PlayerKRZYZYK_X, Y = Players_Y };
+		}
+
 		public int CurrentPlayer { get; set; }
 
 		public Gameplay(Player a_PlayerKOLKO, Player a_PlayerKRZYZYK) : base(a_PlayerKOLKO, a_PlayerKRZYZYK)
@@ -20,15 +34,26 @@ namespace TicTacToeConsole
 			while (!_bQuitGame)
 			{
 				Console.Clear();
-				DrawPlayBoard();
+				DrawHeader(new Coordinates { X = 3, Y = Header_Y }, 2, ConsoleColor.Blue);
+
+				//obliczenie wysokości nagłówka
+				int _iKOLKOInfoHeight = WritePlayerName(PlayerKOLKO.Name, PlayerKOLKOInfoPlace);
+				int _iKRZYZYKInfoHeight = WritePlayerName(PlayerKRZYZYK.Name, PlayerKRZYZYKInfoPlace);
+
+				DrawPlayBoard(new Coordinates { X = 0, Y = Header_Y + 3 + (_iKOLKOInfoHeight > _iKRZYZYKInfoHeight ? _iKOLKOInfoHeight : _iKRZYZYKInfoHeight)});//dziki if?
 				while (!CheckResult())
 				{
 
-					InsertCharactersInfo();
+                    InsertCharactersInfo();
 
 
 					//insert graczy wraz z mozliwoscia wyjscia
-				}
+
+
+					SwitchPlayers();
+
+					Console.ReadKey();//usun
+                }
 			}
 		}
 
@@ -59,25 +84,56 @@ namespace TicTacToeConsole
 			return false;
 		}
 
-		private BoardPlace SelectPlaceForText(string a_sText)
+		private int WritePlayerName(string a_sName, Coordinates a_PlaceToWrite)
 		{
-			//napisać obliczanie położenia tekstu po jego długości
+			int _iHeaderHight = 1;
 
-			return new BoardPlace { };
+			if(a_sName.Length > 7)//7 - maksymalna szerokość nazwy gracza w hederze
+            {
+				string _sRestOfName = a_sName;
+				do
+				{
+					bool _bIsEnd = false;
+                    string _sTempText;
+                    if (_sRestOfName.Length > 7)
+						_sTempText = _sRestOfName.Substring(0, 6);
+					else
+					{
+						_sTempText = _sRestOfName;
+						_bIsEnd = true;
+					}
+
+					_sRestOfName = _sRestOfName.Remove(0, _sTempText.Length);
+
+					Console.SetCursorPosition(a_PlaceToWrite.X - (_sTempText.Length / 2), a_PlaceToWrite.Y + _iHeaderHight - 1);
+
+					Console.Write(_sTempText);
+					if (!_bIsEnd)
+                    {
+						Console.Write("-");
+						_iHeaderHight++;
+					}
+				} while (_sRestOfName.Length > 0);
+            }
+            else
+            {
+				Console.SetCursorPosition(a_PlaceToWrite.X - (a_sName.Length / 2), a_PlaceToWrite.Y);
+				Console.Write(a_sName);
+			}
+
+			return _iHeaderHight;
 		}
 
 		public void InsertCharactersInfo()
 		{
-			Console.SetCursorPosition(0, 0);
-			Console.WriteLine("KOLKO KRZYZYK");
-			BoardPlace _Place = SelectPlaceForText(PlayerKOLKO.Name);
-			Console.SetCursorPosition(_Place.X, _Place.Y);
-			Console.Write(PlayerKOLKO.Name);
-			//ilosc punktów
-
-			//drugi gracz to samo
-
-			//znak - kogo ruch
+			if (CurrentPlayer == 1)
+				Console.ForegroundColor = ConsoleColor.Green;
+			WritePlayerName(PlayerKOLKO.Name, PlayerKOLKOInfoPlace);
+			Console.ResetColor();
+			if (CurrentPlayer == -1)
+				Console.ForegroundColor = ConsoleColor.Green;
+			WritePlayerName(PlayerKRZYZYK.Name, PlayerKRZYZYKInfoPlace);
+			Console.ResetColor();
 		}
 
 		public void SwitchPlayers()

@@ -34,7 +34,7 @@ namespace TicTacToeConsole
 			}
 		}
 
-		public static Player SetPlayer(Character a_Character)
+		public static Player SetPlayer(Character a_Character)//przeniesc do ctora player albo podklasy player
 		{
 			Console.Clear();
 
@@ -66,7 +66,7 @@ namespace TicTacToeConsole
 
 		//			//pobranie miejsca postawienia znaku przez gracza
 		//			Console.SetCursorPosition(0, 15);
-		//			BoardPlace boardPlace;
+		//			Coordinates boardPlace;
 		//			boardPlace = PlayerInput(player);
 
 		//			//próba wporwadzenia danych podanych przez gracza
@@ -121,7 +121,7 @@ namespace TicTacToeConsole
 		//public static void DrowChars()
 		//{
 		//	//pierwszy element: x2-y4
-		//	BoardPlace StartingPlace = new BoardPlace { X = 2, Y = 4 };
+		//	Coordinates StartingPlace = new Coordinates { X = 2, Y = 4 };
 
 		//	for (int y = 0; y < Board.GetLength(1); y++)
 		//	{
@@ -156,7 +156,7 @@ namespace TicTacToeConsole
 		//	CurrentPlayer *= -1;
 		//}
 
-		//public static bool InsertIntoBoard(Player a_player, BoardPlace a_boardPlace)
+		//public static bool InsertIntoBoard(Player a_player, Coordinates a_boardPlace)
 		//{
 		//	if (Board[a_boardPlace.X, a_boardPlace.Y] == 0)
 		//	{
@@ -171,9 +171,9 @@ namespace TicTacToeConsole
 		//	return false;
 		//}
 
-		//public static BoardPlace PlayerInput(Player a_Currendt)
+		//public static Coordinates PlayerInput(Player a_Currendt)
 		//{
-		//	BoardPlace Result = new BoardPlace { };
+		//	Coordinates Result = new Coordinates { };
 		//	Console.WriteLine($"Gracz - {a_Currendt.Name} podaj, w którym miejscu postawić znak {a_Currendt.GetChar()}");
 
 		//	//!@!@ ZABEZPIECYĆ PRZED INNYMI WARTOŚCIAMI NIŻ 1 I -1 I POPRAWIĆ TRY CATCH	@!@!
