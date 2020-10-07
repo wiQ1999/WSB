@@ -1,4 +1,5 @@
-﻿using TicTacToeConsole.Interfaces;
+﻿using System;
+using TicTacToeConsole.Interfaces;
 
 namespace TicTacToeConsole
 {

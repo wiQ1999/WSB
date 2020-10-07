@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Reflection.Metadata.Ecma335;
 using System.Text;
 
 namespace TicTacToeConsole
@@ -7,11 +8,37 @@ namespace TicTacToeConsole
 	abstract class Board
 	{
 		public const int Header_Y = 1;
+		public const int PlayerNameKOLKO_X = 5;
+		public const int PlayerNameKRZYZYK_X = 13;
+		public const int PlayersNames_Y = Header_Y + 2;
+		public int PlayerNameKOLKO_Height { get => WritePlayerName(PlayerKOLKO.Name, PlayerNameKOLKO_Place, false); }
+		public int PlayerNameKRZYZYK_Height { get => WritePlayerName(PlayerKRZYZYK.Name, PlayerNameKRZYZYK_Place, false); }
+		public int PlayersNames_Height { get => PlayerNameKOLKO_Height > PlayerNameKRZYZYK_Height ? PlayerNameKOLKO_Height : PlayerNameKRZYZYK_Height; }
+		public int Board_Y { get => Header_Y + PlayersNames_Height + 3; }
+		public Coordinates PlayerNameKOLKO_Place
+		{
+			get => new Coordinates { X = PlayerNameKOLKO_X, Y = PlayersNames_Y };
+		}
+		public Coordinates PlayerNameKRZYZYK_Place
+		{
+			get => new Coordinates { X = PlayerNameKRZYZYK_X, Y = PlayersNames_Y };
+		}
+
 
 		public Player PlayerKOLKO { get; private set; }
 		public Player PlayerKRZYZYK { get; private set; }
+		
 
-		public int[,] CharactersArray { get; set; }
+		private int[,] _CharactersArray;
+		public int[,] CharactersArray
+		{
+			get => _CharactersArray;
+			set
+			{
+				_CharactersArray = value;
+				DrawCharacters(new Coordinates { X = 0, Y = Board_Y });
+			}
+		}
 
 		public Board(Player a_PlayerKOLKO, Player a_PlayerKRZYZYK)
 		{
@@ -19,6 +46,104 @@ namespace TicTacToeConsole
 			PlayerKRZYZYK = a_PlayerKRZYZYK;
 			CharactersArray = new int[3, 3];
 		}
+
+		public int WritePlayerName(string a_sName, Coordinates a_PlaceToWrite, ConsoleColor a_NameColor, bool a_bIsWriting = true)
+		{
+			Console.ForegroundColor = a_NameColor;
+
+			int _iHeaderHight = 1;
+
+			if (a_sName.Length > 7)
+			{
+				string _sRestOfName = a_sName;
+				do
+				{
+					bool _bIsEnd = false;
+					string _sTempText;
+					if (_sRestOfName.Length > 7)
+						_sTempText = _sRestOfName.Substring(0, 6);
+					else
+					{
+						_sTempText = _sRestOfName;
+						_bIsEnd = true;
+						_iHeaderHight++;
+					}
+
+					_sRestOfName = _sRestOfName.Remove(0, _sTempText.Length);
+
+					Console.SetCursorPosition(a_PlaceToWrite.X - (_sTempText.Length / 2), a_PlaceToWrite.Y + _iHeaderHight - 1);
+
+					if (a_bIsWriting)
+					{
+						Console.Write(_sTempText);
+						if (!_bIsEnd)
+							Console.Write("-");
+					}
+
+				} while (_sRestOfName.Length > 0);
+			}
+			else
+			{
+				Console.SetCursorPosition(a_PlaceToWrite.X - (a_sName.Length / 2), a_PlaceToWrite.Y);
+				Console.Write(a_sName);
+			}
+
+			Console.ResetColor();
+			return _iHeaderHight;
+		}
+
+		public  int WritePlayerName(string a_sName, Coordinates a_PlaceToWrite, bool a_bIsWriting = true)
+		{
+			int _iHeaderHight = 1;
+
+			if (a_sName.Length > 7)
+			{
+				string _sRestOfName = a_sName;
+				do
+				{
+					bool _bIsEnd = false;
+					string _sTempText;
+					if (_sRestOfName.Length > 7)
+						_sTempText = _sRestOfName.Substring(0, 6);
+					else
+					{
+						_sTempText = _sRestOfName;
+						_bIsEnd = true;
+						_iHeaderHight++;
+					}
+
+					_sRestOfName = _sRestOfName.Remove(0, _sTempText.Length);
+
+					Console.SetCursorPosition(a_PlaceToWrite.X - (_sTempText.Length / 2), a_PlaceToWrite.Y + _iHeaderHight - 1);
+
+					if (a_bIsWriting)
+					{
+						Console.Write(_sTempText);
+						if (!_bIsEnd)
+							Console.Write("-");
+					}
+
+				} while (_sRestOfName.Length > 0);
+			}
+			else
+			{
+				Console.SetCursorPosition(a_PlaceToWrite.X - (a_sName.Length / 2), a_PlaceToWrite.Y);
+				Console.Write(a_sName);
+			}
+
+			return _iHeaderHight;
+		}
+
+		private void DrawCharacters(Coordinates a_BoardPosition)
+        {
+            for (int y = 0; y < CharactersArray.GetLength(1); y++)
+            {
+				for (int x = 0; x < CharactersArray.GetLength(0); x++)
+				{
+
+				}
+			}
+        }
 
 		public void DrawHeader(Coordinates a_HeaderPosition, int a_iDistanceBetween, ConsoleColor a_Color)
         {

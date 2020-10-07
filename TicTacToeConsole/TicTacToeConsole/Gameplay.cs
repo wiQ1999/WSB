@@ -7,54 +7,44 @@ namespace TicTacToeConsole
 {
 	class Gameplay : Board, IRules
 	{
-		private const int PlayerKOLKO_X = 5;
-		private const int PlayerKRZYZYK_X = 13;
-		private const int Players_Y = Header_Y + 2;
-
-		public Coordinates PlayerKOLKOInfoPlace
-        {
-			get => new Coordinates { X = PlayerKOLKO_X, Y = Players_Y };
-        }
-
-		public Coordinates PlayerKRZYZYKInfoPlace
-		{
-			get => new Coordinates { X = PlayerKRZYZYK_X, Y = Players_Y };
-		}
-
 		public int CurrentPlayer { get; set; }
 
 		public Gameplay(Player a_PlayerKOLKO, Player a_PlayerKRZYZYK) : base(a_PlayerKOLKO, a_PlayerKRZYZYK)
 		{
-			CurrentPlayer = a_PlayerKOLKO.GetCharacterValue();
+			CurrentPlayer = a_PlayerKRZYZYK.GetCharacterValue();
 		}
 
 		public void StartGame()
 		{
-			bool _bQuitGame = false;
-			while (!_bQuitGame)
+			Console.Clear();
+
+			//rysowanie nagłówka
+			DrawHeader(new Coordinates { X = 3, Y = Header_Y }, 2, ConsoleColor.Blue);
+
+			//rysowanie planszy do gry
+			DrawPlayBoard(new Coordinates { X = 0, Y = Board_Y });
+
+			while (!CheckResult())//sprawdzenie rezultatu
 			{
-				Console.Clear();
-				DrawHeader(new Coordinates { X = 3, Y = Header_Y }, 2, ConsoleColor.Blue);
+				//wprowadzenie nazwy gracza oraz jego kolejności
+				InsertCharactersInfo();
 
-				//obliczenie wysokości nagłówka
-				int _iKOLKOInfoHeight = WritePlayerName(PlayerKOLKO.Name, PlayerKOLKOInfoPlace);
-				int _iKRZYZYKInfoHeight = WritePlayerName(PlayerKRZYZYK.Name, PlayerKRZYZYKInfoPlace);
+				//wprowadzenie pozycji wprowadzanego znaku przez użytkownika
+				Coordinates _PlaceToInsert = InsertData(new Coordinates { X = 0, Y = Board_Y + 14 });
+				if (_PlaceToInsert.X == -1)//wyjście
+					break;
 
-				DrawPlayBoard(new Coordinates { X = 0, Y = Header_Y + 3 + (_iKOLKOInfoHeight > _iKRZYZYKInfoHeight ? _iKOLKOInfoHeight : _iKRZYZYKInfoHeight)});//dziki if?
-				while (!CheckResult())
-				{
+				//wstawienie znaku gracza do tablicy
+				CharactersArray[_PlaceToInsert.X - 1, _PlaceToInsert.Y - 1] = CurrentPlayer;
 
-                    InsertCharactersInfo();
-
-
-					//insert graczy wraz z mozliwoscia wyjscia
-
-
-					SwitchPlayers();
-
-					Console.ReadKey();//usun
-                }
+				//zmiana gracza
+				SwitchPlayers();
 			}
+
+			//zmiana gracza ze względu na zmianę na końcu pętli
+			SwitchPlayers();
+
+
 		}
 
 		public bool CheckResult()
@@ -84,56 +74,85 @@ namespace TicTacToeConsole
 			return false;
 		}
 
-		private int WritePlayerName(string a_sName, Coordinates a_PlaceToWrite)
-		{
-			int _iHeaderHight = 1;
-
-			if(a_sName.Length > 7)//7 - maksymalna szerokość nazwy gracza w hederze
+		private int ConvertKeyToInt(ConsoleKey a_Key)
+        {
+            switch (a_Key)
             {
-				string _sRestOfName = a_sName;
-				do
-				{
-					bool _bIsEnd = false;
-                    string _sTempText;
-                    if (_sRestOfName.Length > 7)
-						_sTempText = _sRestOfName.Substring(0, 6);
-					else
-					{
-						_sTempText = _sRestOfName;
-						_bIsEnd = true;
-					}
-
-					_sRestOfName = _sRestOfName.Remove(0, _sTempText.Length);
-
-					Console.SetCursorPosition(a_PlaceToWrite.X - (_sTempText.Length / 2), a_PlaceToWrite.Y + _iHeaderHight - 1);
-
-					Console.Write(_sTempText);
-					if (!_bIsEnd)
-                    {
-						Console.Write("-");
-						_iHeaderHight++;
-					}
-				} while (_sRestOfName.Length > 0);
-            }
-            else
-            {
-				Console.SetCursorPosition(a_PlaceToWrite.X - (a_sName.Length / 2), a_PlaceToWrite.Y);
-				Console.Write(a_sName);
+				case ConsoleKey.D1:
+					return 1;
+				case ConsoleKey.NumPad1:
+					return 1;
+				case ConsoleKey.D2:
+					return 2;
+				case ConsoleKey.NumPad2:
+					return 2;
+				case ConsoleKey.D3:
+					return 3;
+				case ConsoleKey.NumPad3:
+					return 3;
+				default:
+					return 0;
 			}
+        }
 
-			return _iHeaderHight;
+		private ConsoleKey CheckInsert(Coordinates a_InsertingPlace, string a_sErrorMessag, Coordinates a_MessagePlace)
+        {
+			ConsoleKey _Key;
+			bool _bIsInserting = true;
+			do
+			{
+				//usunięcie nie zatwierdzonego klawisza z konsoli
+				Console.SetCursorPosition(a_InsertingPlace.X, a_InsertingPlace.Y);
+                Console.Write("          ");
+				Console.SetCursorPosition(a_InsertingPlace.X, a_InsertingPlace.Y);
+
+				//wczytanie klawisza od uzytkownika oraz sprawdzenie go
+				_Key = Console.ReadKey().Key;
+				if (_Key == ConsoleKey.Escape || _Key == ConsoleKey.D1 || _Key == ConsoleKey.NumPad1 || _Key == ConsoleKey.D2 || _Key == ConsoleKey.NumPad2 || _Key == ConsoleKey.D3 || _Key == ConsoleKey.NumPad3)
+					_bIsInserting = false;
+                else
+                {
+					Console.SetCursorPosition(a_MessagePlace.X, a_MessagePlace.Y);
+					Console.WriteLine(a_sErrorMessag);
+                }
+				
+			} while (_bIsInserting);
+
+			return _Key;
+        }
+
+		private Coordinates InsertData(Coordinates a_ComunicationPlace)
+		{
+			Console.SetCursorPosition(a_ComunicationPlace.X, a_ComunicationPlace.Y);
+
+			Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("(ESC) - wyjście");
+			Console.ResetColor();
+
+            Console.WriteLine();
+			
+			Console.Write("Podaj kolumnę: ");
+			ConsoleKey _Col = CheckInsert(new Coordinates { X = 15, Y = a_ComunicationPlace.Y + 2 }, "Podaj wartość z przedziału liczbowego 1 - 3", new Coordinates { X = a_ComunicationPlace.X, Y = a_ComunicationPlace.Y + 3 });
+			if (_Col == ConsoleKey.Escape) return new Coordinates { X = -1, Y = -1 };
+			Console.Write("Podaj wiersz: ");
+			ConsoleKey _Row = CheckInsert(new Coordinates { X = 14, Y = a_ComunicationPlace.Y + 4 }, "Podaj wartość z przedziału liczbowego 1 - 3", new Coordinates { X = a_ComunicationPlace.X, Y = a_ComunicationPlace.Y + 5 });
+			if (_Row == ConsoleKey.Escape) return new Coordinates { X = -1, Y = -1 };
+
+			return new Coordinates { X = ConvertKeyToInt(_Col), Y = ConvertKeyToInt(_Row) };
 		}
 
 		public void InsertCharactersInfo()
 		{
 			if (CurrentPlayer == 1)
-				Console.ForegroundColor = ConsoleColor.Green;
-			WritePlayerName(PlayerKOLKO.Name, PlayerKOLKOInfoPlace);
-			Console.ResetColor();
-			if (CurrentPlayer == -1)
-				Console.ForegroundColor = ConsoleColor.Green;
-			WritePlayerName(PlayerKRZYZYK.Name, PlayerKRZYZYKInfoPlace);
-			Console.ResetColor();
+			{
+				WritePlayerName(PlayerKOLKO.Name, PlayerNameKOLKO_Place, ConsoleColor.Green);
+				WritePlayerName(PlayerKRZYZYK.Name, PlayerNameKRZYZYK_Place);
+			}
+            else
+            {
+				WritePlayerName(PlayerKOLKO.Name, PlayerNameKOLKO_Place);
+				WritePlayerName(PlayerKRZYZYK.Name, PlayerNameKRZYZYK_Place, ConsoleColor.Green);
+			}
 		}
 
 		public void SwitchPlayers()

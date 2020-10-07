@@ -21,8 +21,8 @@ namespace TicTacToeConsole
 				switch (Console.ReadKey().Key)
 				{
 					case ConsoleKey.D1:
-						Gameplay Game = new Gameplay(SetPlayer(Character.KOLKO), SetPlayer(Character.KRZYZYK));
-						Game.StartGame();
+						Gameplay gameplay = new Gameplay(SetPlayer(Character.KOLKO), SetPlayer(Character.KRZYZYK));
+						gameplay.StartGame();
 						break;
 					case ConsoleKey.D2:
 						Console.WriteLine("DODAĆ STATYSTYKI TRZEBA!");

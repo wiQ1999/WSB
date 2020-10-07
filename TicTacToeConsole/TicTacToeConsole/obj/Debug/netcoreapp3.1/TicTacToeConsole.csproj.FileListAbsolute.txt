@@ -36,3 +36,16 @@ C:\Users\Rodzinka\Source\Repos\TicTacToeConsole\TicTacToeConsole\TicTacToeConsol
 C:\Users\Rodzinka\Source\Repos\TicTacToeConsole\TicTacToeConsole\TicTacToeConsole\obj\Debug\netcoreapp3.1\TicTacToeConsole.pdb
 C:\Users\Rodzinka\Source\Repos\TicTacToeConsole\TicTacToeConsole\TicTacToeConsole\obj\Debug\netcoreapp3.1\TicTacToeConsole.genruntimeconfig.cache
 C:\Users\Rodzinka\Source\Repos\TicTacToeConsole\TicTacToeConsole\TicTacToeConsole\obj\Debug\netcoreapp3.1\TicTacToeConsole.csprojAssemblyReference.cache
+F:\VisualProj\Wiktor_Szczeszek\TicTacToeConsole\TicTacToeConsole\TicTacToeConsole\bin\Debug\netcoreapp3.1\TicTacToeConsole.exe
+F:\VisualProj\Wiktor_Szczeszek\TicTacToeConsole\TicTacToeConsole\TicTacToeConsole\bin\Debug\netcoreapp3.1\TicTacToeConsole.deps.json
+F:\VisualProj\Wiktor_Szczeszek\TicTacToeConsole\TicTacToeConsole\TicTacToeConsole\bin\Debug\netcoreapp3.1\TicTacToeConsole.runtimeconfig.json
+F:\VisualProj\Wiktor_Szczeszek\TicTacToeConsole\TicTacToeConsole\TicTacToeConsole\bin\Debug\netcoreapp3.1\TicTacToeConsole.runtimeconfig.dev.json
+F:\VisualProj\Wiktor_Szczeszek\TicTacToeConsole\TicTacToeConsole\TicTacToeConsole\bin\Debug\netcoreapp3.1\TicTacToeConsole.dll
+F:\VisualProj\Wiktor_Szczeszek\TicTacToeConsole\TicTacToeConsole\TicTacToeConsole\bin\Debug\netcoreapp3.1\TicTacToeConsole.pdb
+F:\VisualProj\Wiktor_Szczeszek\TicTacToeConsole\TicTacToeConsole\TicTacToeConsole\obj\Debug\netcoreapp3.1\TicTacToeConsole.csprojAssemblyReference.cache
+F:\VisualProj\Wiktor_Szczeszek\TicTacToeConsole\TicTacToeConsole\TicTacToeConsole\obj\Debug\netcoreapp3.1\TicTacToeConsole.AssemblyInfoInputs.cache
+F:\VisualProj\Wiktor_Szczeszek\TicTacToeConsole\TicTacToeConsole\TicTacToeConsole\obj\Debug\netcoreapp3.1\TicTacToeConsole.AssemblyInfo.cs
+F:\VisualProj\Wiktor_Szczeszek\TicTacToeConsole\TicTacToeConsole\TicTacToeConsole\obj\Debug\netcoreapp3.1\TicTacToeConsole.csproj.CoreCompileInputs.cache
+F:\VisualProj\Wiktor_Szczeszek\TicTacToeConsole\TicTacToeConsole\TicTacToeConsole\obj\Debug\netcoreapp3.1\TicTacToeConsole.dll
+F:\VisualProj\Wiktor_Szczeszek\TicTacToeConsole\TicTacToeConsole\TicTacToeConsole\obj\Debug\netcoreapp3.1\TicTacToeConsole.pdb
+F:\VisualProj\Wiktor_Szczeszek\TicTacToeConsole\TicTacToeConsole\TicTacToeConsole\obj\Debug\netcoreapp3.1\TicTacToeConsole.genruntimeconfig.cache
