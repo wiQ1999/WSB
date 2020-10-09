@@ -7,14 +7,12 @@ namespace TicTacToeConsole
 {
 	abstract class Board
 	{
-		public const int Header_Y = 1;
+        #region Coordinates
+
+        public const int Header_Y = 1;
 		public const int PlayerNameKOLKO_X = 5;
 		public const int PlayerNameKRZYZYK_X = 13;
 		public const int PlayersNames_Y = Header_Y + 2;
-		public int PlayerNameKOLKO_Height { get => WritePlayerName(PlayerKOLKO.Name, PlayerNameKOLKO_Place, false); }
-		public int PlayerNameKRZYZYK_Height { get => WritePlayerName(PlayerKRZYZYK.Name, PlayerNameKRZYZYK_Place, false); }
-		public int PlayersNames_Height { get => PlayerNameKOLKO_Height > PlayerNameKRZYZYK_Height ? PlayerNameKOLKO_Height : PlayerNameKRZYZYK_Height; }
-		public int Board_Y { get => Header_Y + PlayersNames_Height + 3; }
 		public Coordinates PlayerNameKOLKO_Place
 		{
 			get => new Coordinates { X = PlayerNameKOLKO_X, Y = PlayersNames_Y };
@@ -23,22 +21,18 @@ namespace TicTacToeConsole
 		{
 			get => new Coordinates { X = PlayerNameKRZYZYK_X, Y = PlayersNames_Y };
 		}
+		public int PlayerNameKOLKO_Height { get => WritePlayerName(PlayerKOLKO.Name, PlayerNameKOLKO_Place, false); }
+		public int PlayerNameKRZYZYK_Height { get => WritePlayerName(PlayerKRZYZYK.Name, PlayerNameKRZYZYK_Place, false); }
+		public int PlayersNames_Height { get => PlayerNameKOLKO_Height > PlayerNameKRZYZYK_Height ? PlayerNameKOLKO_Height : PlayerNameKRZYZYK_Height; }
+		public int Board_Y { get => Header_Y + PlayersNames_Height + 3; }
+
+        #endregion
 
 
-		public Player PlayerKOLKO { get; private set; }
+        public Player PlayerKOLKO { get; private set; }
 		public Player PlayerKRZYZYK { get; private set; }
-		
+		public int[,] CharactersArray { get; set; }
 
-		private int[,] _CharactersArray;
-		public int[,] CharactersArray
-		{
-			get => _CharactersArray;
-			set
-			{
-				_CharactersArray = value;
-				DrawCharacters(new Coordinates { X = 0, Y = Board_Y });
-			}
-		}
 
 		public Board(Player a_PlayerKOLKO, Player a_PlayerKRZYZYK)
 		{
@@ -46,6 +40,23 @@ namespace TicTacToeConsole
 			PlayerKRZYZYK = a_PlayerKRZYZYK;
 			CharactersArray = new int[3, 3];
 		}
+
+		public Player GetCurrentPlayer(int a_CurrentPlayer)
+        {
+			return a_CurrentPlayer == 1 ? PlayerKOLKO : PlayerKRZYZYK;
+		}
+
+		public void RemoveTextArea(Coordinates a_StartPlace, Coordinates a_EndPlace)
+        {
+            for (int y = a_StartPlace.Y; y <= a_EndPlace.Y; y++)
+            {
+				for (int x = a_StartPlace.X; x <= a_EndPlace.X; x++)
+				{
+					Console.SetCursorPosition(x, y);
+					Console.Write(" ");
+				}
+			}
+        }
 
 		public int WritePlayerName(string a_sName, Coordinates a_PlaceToWrite, ConsoleColor a_NameColor, bool a_bIsWriting = true)
 		{
@@ -82,7 +93,7 @@ namespace TicTacToeConsole
 
 				} while (_sRestOfName.Length > 0);
 			}
-			else
+			else if(a_bIsWriting)
 			{
 				Console.SetCursorPosition(a_PlaceToWrite.X - (a_sName.Length / 2), a_PlaceToWrite.Y);
 				Console.Write(a_sName);
@@ -125,7 +136,7 @@ namespace TicTacToeConsole
 
 				} while (_sRestOfName.Length > 0);
 			}
-			else
+			else if(a_bIsWriting)
 			{
 				Console.SetCursorPosition(a_PlaceToWrite.X - (a_sName.Length / 2), a_PlaceToWrite.Y);
 				Console.Write(a_sName);
@@ -134,14 +145,31 @@ namespace TicTacToeConsole
 			return _iHeaderHight;
 		}
 
-		private void DrawCharacters(Coordinates a_BoardPosition)
+		public void DrawCharacters(Coordinates a_BoardPosition)
         {
-            for (int y = 0; y < CharactersArray.GetLength(1); y++)
+			int _iY = -2;
+			int _iX = -3;
+
+			for (int y = 0; y < CharactersArray.GetLength(1); y++)
             {
+				_iY += 4;
 				for (int x = 0; x < CharactersArray.GetLength(0); x++)
 				{
-
+					_iX += 6;
+					Console.SetCursorPosition(a_BoardPosition.X + _iX, a_BoardPosition.Y +_iY);
+                    switch (CharactersArray[x, y])
+                    {
+						case 1:
+                            Console.Write("O");
+							break;
+						case -1:
+							Console.Write("X");
+							break;
+						default:
+							break;
+					}
 				}
+				_iX = -3;
 			}
         }
 

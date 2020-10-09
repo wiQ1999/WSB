@@ -1,0 +1,8 @@
+[LP].[Winner].[Loser]
+1.wiQ2.wiQ.
+2.wiQ2.wiQ.
+3.wiQ2.wiQ.
+4.wiQ2.wiQ.
+5.wiQ2.wiQ.
+6.wiQ.wiQ2.
+7.wiQ2.wiQ.

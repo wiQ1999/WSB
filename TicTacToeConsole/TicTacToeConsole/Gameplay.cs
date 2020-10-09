@@ -11,7 +11,7 @@ namespace TicTacToeConsole
 
 		public Gameplay(Player a_PlayerKOLKO, Player a_PlayerKRZYZYK) : base(a_PlayerKOLKO, a_PlayerKRZYZYK)
 		{
-			CurrentPlayer = a_PlayerKRZYZYK.GetCharacterValue();
+			CurrentPlayer = a_PlayerKOLKO.GetCharacterValue();
 		}
 
 		public void StartGame()
@@ -24,27 +24,62 @@ namespace TicTacToeConsole
 			//rysowanie planszy do gry
 			DrawPlayBoard(new Coordinates { X = 0, Y = Board_Y });
 
-			while (!CheckResult())//sprawdzenie rezultatu
+			bool _bIsExit = false;
+			int _i = 1;
+			while (!CheckResult() && _i <= 9)//sprawdzenie rezultatu
 			{
+				//zmiana gracza
+				SwitchPlayers();
+
 				//wprowadzenie nazwy gracza oraz jego kolejności
 				InsertCharactersInfo();
 
 				//wprowadzenie pozycji wprowadzanego znaku przez użytkownika
-				Coordinates _PlaceToInsert = InsertData(new Coordinates { X = 0, Y = Board_Y + 14 });
-				if (_PlaceToInsert.X == -1)//wyjście
+				Coordinates _PlaceToInsert;
+				do
+				{
+					_PlaceToInsert = InsertData(new Coordinates { X = 0, Y = Board_Y + 14 });
+					if (_PlaceToInsert.X == -1)//wyjście
+					{
+                        Console.WriteLine("Wyjście z rozgrywki!");
+						_bIsExit = true;
+						break;
+					}
+				} while (CharactersArray[_PlaceToInsert.X - 1, _PlaceToInsert.Y - 1] != 0);
+				//wyjście
+				if (_bIsExit)
 					break;
 
 				//wstawienie znaku gracza do tablicy
 				CharactersArray[_PlaceToInsert.X - 1, _PlaceToInsert.Y - 1] = CurrentPlayer;
+				DrawCharacters(new Coordinates { X = 0, Y = Board_Y });
 
-				//zmiana gracza
-				SwitchPlayers();
+				//zwiększenie iteratora gry
+				_i++;
 			}
 
-			//zmiana gracza ze względu na zmianę na końcu pętli
-			SwitchPlayers();
+			//komunikat kończący rozgrywkę
+			if (!_bIsExit)
+			{
+				Console.Clear();
+				if (_i == 10)
+					Console.WriteLine("REMIS!");
+				else
+				{
+					Player _Winner = GetCurrentPlayer(CurrentPlayer);
+					SwitchPlayers();
+					Player _Loser = GetCurrentPlayer(CurrentPlayer);
 
+					Console.WriteLine($"WYGRAL GRACZ {_Winner.Name} - {_Winner.GetCharacterChar()}");
 
+					//zapisanie danych do pliku
+					Statistics statistics = new Statistics();
+					statistics.SaveGame(_Winner.Name, _Loser.Name);
+				}
+
+				Console.WriteLine("(Wcisnij dowolny klawisz, aby wrocic do menu)");
+				Console.ReadKey();
+			}
 		}
 
 		public bool CheckResult()
@@ -129,11 +164,14 @@ namespace TicTacToeConsole
             Console.WriteLine("(ESC) - wyjście");
 			Console.ResetColor();
 
-            Console.WriteLine();
-			
+			//usuwanie starych logów
+			RemoveTextArea(new Coordinates { X = a_ComunicationPlace.X, Y = a_ComunicationPlace.Y + 2 }, new Coordinates { X = a_ComunicationPlace.X + 43, Y = a_ComunicationPlace.Y + 4 });
+
+			Console.SetCursorPosition(a_ComunicationPlace.X, a_ComunicationPlace.Y + 2);
 			Console.Write("Podaj kolumnę: ");
 			ConsoleKey _Col = CheckInsert(new Coordinates { X = 15, Y = a_ComunicationPlace.Y + 2 }, "Podaj wartość z przedziału liczbowego 1 - 3", new Coordinates { X = a_ComunicationPlace.X, Y = a_ComunicationPlace.Y + 3 });
 			if (_Col == ConsoleKey.Escape) return new Coordinates { X = -1, Y = -1 };
+			Console.SetCursorPosition(a_ComunicationPlace.X, a_ComunicationPlace.Y + 4);
 			Console.Write("Podaj wiersz: ");
 			ConsoleKey _Row = CheckInsert(new Coordinates { X = 14, Y = a_ComunicationPlace.Y + 4 }, "Podaj wartość z przedziału liczbowego 1 - 3", new Coordinates { X = a_ComunicationPlace.X, Y = a_ComunicationPlace.Y + 5 });
 			if (_Row == ConsoleKey.Escape) return new Coordinates { X = -1, Y = -1 };

@@ -8,9 +8,22 @@ namespace TicTacToeConsole
 		public string Name { get; }
 		public Character Character { get; }
 
-		public Player(string a_Name, Character a_Character)
+		public Player(Character a_Character)
 		{
-			Name = a_Name;
+			string _sName;
+			do
+			{
+				_sName = string.Empty;
+				Console.ResetColor();
+				Console.Clear();
+
+				Console.WriteLine("GRACZ " + a_Character);
+				Console.Write("Podaj nazwę: ");
+				Console.ForegroundColor = ConsoleColor.Green;
+			} while ((_sName = Console.ReadLine()).Contains('.') || _sName == string.Empty);
+
+			Console.ResetColor();
+			Name = _sName;
 			Character = a_Character;
 		}
 
