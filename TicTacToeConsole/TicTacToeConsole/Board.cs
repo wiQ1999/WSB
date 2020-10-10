@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Reflection.Metadata.Ecma335;
-using System.Text;
 
 namespace TicTacToeConsole
 {
@@ -21,8 +18,8 @@ namespace TicTacToeConsole
 		{
 			get => new Coordinates { X = PlayerNameKRZYZYK_X, Y = PlayersNames_Y };
 		}
-		public int PlayerNameKOLKO_Height { get => WritePlayerName(PlayerKOLKO.Name, PlayerNameKOLKO_Place, false); }
-		public int PlayerNameKRZYZYK_Height { get => WritePlayerName(PlayerKRZYZYK.Name, PlayerNameKRZYZYK_Place, false); }
+		public int PlayerNameKOLKO_Height { get => WritePlayerName(PlayerKOLKO.Name, PlayerNameKOLKO_Place, ConsoleColor.White, false); }
+		public int PlayerNameKRZYZYK_Height { get => WritePlayerName(PlayerKRZYZYK.Name, PlayerNameKRZYZYK_Place, ConsoleColor.White, false); }
 		public int PlayersNames_Height { get => PlayerNameKOLKO_Height > PlayerNameKRZYZYK_Height ? PlayerNameKOLKO_Height : PlayerNameKRZYZYK_Height; }
 		public int Board_Y { get => Header_Y + PlayersNames_Height + 3; }
 
@@ -41,11 +38,21 @@ namespace TicTacToeConsole
 			CharactersArray = new int[3, 3];
 		}
 
+		/// <summary>
+		/// Get current player
+		/// </summary>
+		/// <param name="a_CurrentPlayer">Value of current player</param>
+		/// <returns>Current player instance</returns>
 		public Player GetCurrentPlayer(int a_CurrentPlayer)
         {
 			return a_CurrentPlayer == 1 ? PlayerKOLKO : PlayerKRZYZYK;
 		}
 
+		/// <summary>
+		/// Remove area of text
+		/// </summary>
+		/// <param name="a_StartPlace">Coordinates where cleaning have to start</param>
+		/// <param name="a_EndPlace">Coordinates where cleaning have to end</param>
 		public void RemoveTextArea(Coordinates a_StartPlace, Coordinates a_EndPlace)
         {
             for (int y = a_StartPlace.Y; y <= a_EndPlace.Y; y++)
@@ -58,12 +65,19 @@ namespace TicTacToeConsole
 			}
         }
 
+		/// <summary>
+		/// Write player name on a console
+		/// </summary>
+		/// <param name="a_sName">Player name</param>
+		/// <param name="a_PlaceToWrite">Coordinate pointing place to write</param>
+		/// <param name="a_NameColor">Color of name</param>
+		/// <param name="a_bIsWriting">Switch to write or not</param>
+		/// <returns>An int value representing the number of lines of the name</returns>
 		public int WritePlayerName(string a_sName, Coordinates a_PlaceToWrite, ConsoleColor a_NameColor, bool a_bIsWriting = true)
 		{
 			Console.ForegroundColor = a_NameColor;
 
 			int _iHeaderHight = 1;
-
 			if (a_sName.Length > 7)
 			{
 				string _sRestOfName = a_sName;
@@ -103,48 +117,10 @@ namespace TicTacToeConsole
 			return _iHeaderHight;
 		}
 
-		public  int WritePlayerName(string a_sName, Coordinates a_PlaceToWrite, bool a_bIsWriting = true)
-		{
-			int _iHeaderHight = 1;
-
-			if (a_sName.Length > 7)
-			{
-				string _sRestOfName = a_sName;
-				do
-				{
-					bool _bIsEnd = false;
-					string _sTempText;
-					if (_sRestOfName.Length > 7)
-						_sTempText = _sRestOfName.Substring(0, 6);
-					else
-					{
-						_sTempText = _sRestOfName;
-						_bIsEnd = true;
-						_iHeaderHight++;
-					}
-
-					_sRestOfName = _sRestOfName.Remove(0, _sTempText.Length);
-
-					Console.SetCursorPosition(a_PlaceToWrite.X - (_sTempText.Length / 2), a_PlaceToWrite.Y + _iHeaderHight - 1);
-
-					if (a_bIsWriting)
-					{
-						Console.Write(_sTempText);
-						if (!_bIsEnd)
-							Console.Write("-");
-					}
-
-				} while (_sRestOfName.Length > 0);
-			}
-			else if(a_bIsWriting)
-			{
-				Console.SetCursorPosition(a_PlaceToWrite.X - (a_sName.Length / 2), a_PlaceToWrite.Y);
-				Console.Write(a_sName);
-			}
-
-			return _iHeaderHight;
-		}
-
+		/// <summary>
+		/// Droaw charackters array on a board
+		/// </summary>
+		/// <param name="a_BoardPosition">Coordinates of board</param>
 		public void DrawCharacters(Coordinates a_BoardPosition)
         {
 			int _iY = -2;
@@ -173,6 +149,12 @@ namespace TicTacToeConsole
 			}
         }
 
+		/// <summary>
+		/// Draw header
+		/// </summary>
+		/// <param name="a_HeaderPosition">Coordinates of header</param>
+		/// <param name="a_iDistanceBetween">Distance beetwen "KOLKO" and "KRZYZYK"</param>
+		/// <param name="a_Color">Color of text</param>
 		public void DrawHeader(Coordinates a_HeaderPosition, int a_iDistanceBetween, ConsoleColor a_Color)
         {
 			Console.SetCursorPosition(a_HeaderPosition.X, a_HeaderPosition.Y);
@@ -186,6 +168,10 @@ namespace TicTacToeConsole
 			Console.ResetColor();
 		}
 
+		/// <summary>
+		/// Draw main play board
+		/// </summary>
+		/// <param name="a_BoardPosition">Coordinates of play board on a console</param>
 		public void DrawPlayBoard(Coordinates a_BoardPosition)
 		{
 			Console.SetCursorPosition(a_BoardPosition.X, a_BoardPosition.Y);

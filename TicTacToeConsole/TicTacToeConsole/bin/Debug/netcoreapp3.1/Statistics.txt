@@ -1,8 +1,13 @@
-[LP].[Winner].[Loser]
-1.wiQ2.wiQ.
-2.wiQ2.wiQ.
-3.wiQ2.wiQ.
-4.wiQ2.wiQ.
-5.wiQ2.wiQ.
-6.wiQ.wiQ2.
-7.wiQ2.wiQ.
+﻿[LP].[Winner].[PlayerKOLKO].[PlayerKRZYZYK]. Po każdej informacji jest konieczna kropka!
+1.Ponczek.wiQ.Ponczek.
+2. .wiQ.wiQ2.
+3.wiQ2.wiQ.wiQ2.
+4.wiQ.Ponczek.wiQ.
+5.wiQ.Ponczek.wiQ.
+6.Ponczek.Ponczek.wiQ.
+7.Ponczek.wiQ.Ponczek.
+8.Ponczek.wiQ.Ponczek.
+9. .wiQ.Ponczek.10. .wiQ.ponczek.
+10.wiQ.Ponczek.wiQ.
+11.Ponczek.wiQ.Ponczek.
+12.wiQ2.wiQ.wiQ2.

@@ -6,6 +6,9 @@ namespace TicTacToeConsole
 {
     class Statistics
     {
+        /// <summary>
+        /// File with statistics
+        /// </summary>
         public string FileName { get; }
 
 
@@ -15,31 +18,168 @@ namespace TicTacToeConsole
         }
 
 
-        private List<string> PlayerList(StreamReader a_sr)
+        /// <summary>
+        /// Search for statistics about player
+        /// </summary>
+        /// <param name="a_sFirstPlayerName">Player to find</param>
+        /// <param name="a_sSecondPlayerName">The player with whom the matches were played</param>
+        /// <returns>Statistics about player</returns>
+        public PlayerStats ReadPlayerStats(string a_sFirstPlayerName, string a_sSecondPlayerName)
+        {
+            PlayerStats _Result = new PlayerStats();
+
+            try
+            {
+                using (StreamReader sr = new StreamReader(FileName))
+                {
+                    _Result.Name = a_sFirstPlayerName;
+
+                    bool _bIsFirstLine = true;
+                    string _sLine;
+                    while ((_sLine = sr.ReadLine()) != null)
+                    {
+                        if (_bIsFirstLine)
+                        {
+                            _bIsFirstLine = false;
+                            continue;
+                        }
+
+                        HeaderElements _Elements = GetHeaderElements(_sLine);
+
+                        if((_Elements.PlayerKOLKO == a_sFirstPlayerName && _Elements.PlayerKRZYZYK == a_sSecondPlayerName) || (_Elements.PlayerKOLKO == a_sSecondPlayerName && _Elements.PlayerKRZYZYK == a_sFirstPlayerName))
+						{
+                            if (_Elements.Winner == a_sFirstPlayerName)
+                                _Result.Wins++;
+                            else if (_Elements.Winner == " ")
+                                _Result.Draw++;
+                            else
+                                _Result.Loses++;
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+
+            return _Result;
+        }
+
+        /// <summary>
+        /// Search for statistics about player
+        /// </summary>
+        /// <param name="a_sPlayerName">Player to find</param>
+        /// <returns>Statistics about player</returns>
+        public PlayerStats ReadPlayerStats(string a_sPlayerName)
+		{
+            PlayerStats _Result = new PlayerStats();
+
+            try
+            {
+                using (StreamReader sr = new StreamReader(FileName))
+                {
+                    _Result.Name = a_sPlayerName;
+
+                    bool _bIsFirstLine = true;
+                    string _sLine;
+                    while ((_sLine = sr.ReadLine()) != null)
+                    {
+                        if (_bIsFirstLine)
+                        {
+                            _bIsFirstLine = false;
+                            continue;
+                        }
+
+                        HeaderElements _Elements = GetHeaderElements(_sLine);
+
+                        if (_Elements.PlayerKOLKO == a_sPlayerName || _Elements.PlayerKRZYZYK == a_sPlayerName)
+						{
+                            if (_Elements.Winner == a_sPlayerName)
+                                _Result.Wins++;
+                            else if (_Elements.Winner == " ")
+                                _Result.Draw++;
+                            else
+                                _Result.Loses++;
+						}
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+
+            return _Result;
+		}
+
+        /// <summary>
+        /// Get list of players from statistics file
+        /// </summary>
+        /// <returns>Players list</returns>
+        public List<string> ReadPlayerList()
         {
             List<string> _oResult = new List<string>();
 
-            bool _bIsFirstLine = true;
-            string _sLine;
-            while ((_sLine = a_sr.ReadLine()) != null)
+            try
             {
-                if(_bIsFirstLine)
+                using (StreamReader sr = new StreamReader(FileName))
                 {
-                    _bIsFirstLine = false;
-                    continue;
+                    bool _bIsFirstLine = true;
+                    string _sLine;
+                    while ((_sLine = sr.ReadLine()) != null)
+                    {
+                        if(_bIsFirstLine)
+                        {
+                            _bIsFirstLine = false;
+                            continue;
+                        }
+
+                        HeaderElements _Elements = GetHeaderElements(_sLine);
+
+                        if (!_oResult.Contains(_Elements.PlayerKOLKO))
+                            _oResult.Add(_Elements.PlayerKOLKO);
+                        if (!_oResult.Contains(_Elements.PlayerKRZYZYK))
+                            _oResult.Add(_Elements.PlayerKRZYZYK);
+                    }
                 }
-
-                HeaderElements _Elements = GetHeaderElements(_sLine);
-
-                if (!_oResult.Contains(_Elements.Winner))
-                    _oResult.Add(_Elements.Winner);
-                if (!_oResult.Contains(_Elements.Loser))
-                    _oResult.Add(_Elements.Loser);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
             }
 
             return _oResult;
         }
 
+        /// <summary>
+        /// Counts lines in txt file
+        /// </summary>
+        /// <returns>Next index in statistics file</returns>
+        public int ReadNextIndex()
+        {
+            int _iResult = 0;
+            try
+            {
+                using (StreamReader sr = new StreamReader(FileName))
+                {
+                    while (sr.ReadLine() != null)
+                        _iResult++;
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+
+            return _iResult++;
+        }
+
+        /// <summary>
+        /// Get main information from txt file
+        /// </summary>
+        /// <param name="a_sLine">Line of text file</param>
+        /// <returns>Main informations about winner and players</returns>
         private HeaderElements GetHeaderElements(string a_sLine)
         {
             HeaderElements _Result = new HeaderElements();
@@ -59,7 +199,10 @@ namespace TicTacToeConsole
                             _Result.Winner = _sTemp;
                             break;
                         case 2:
-                            _Result.Loser = _sTemp;
+                            _Result.PlayerKOLKO = _sTemp;
+                            break;
+                        case 3:
+                            _Result.PlayerKRZYZYK = _sTemp;
                             break;
                     }
 
@@ -74,58 +217,47 @@ namespace TicTacToeConsole
             return _Result;
         }
 
-        private int NextIndex(StreamReader a_sr)
-        {
-            int _iResult = 0;
-            while (a_sr.ReadLine() != null)
-                _iResult++;
-
-            return _iResult++;
-        }
-
-        public object Read(StatsOptions a_Action)
-        {
-            try
-            {
-                using (StreamReader sr = new StreamReader(FileName))
-                {
-                    switch (a_Action)
-                    {
-                        case StatsOptions.NextIndex:
-                            return NextIndex(sr);
-                        case StatsOptions.PlayersList:
-                            return PlayerList(sr);
-                    }
-                }
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-            }
-
-            return null;
-        }
-
-        public void SaveGame(string a_Winner, string a_Loser)
+        /// <summary>
+        /// Save information about end of the game
+        /// </summary>
+        /// <param name="a_sKOLKO">Player KOLKO</param>
+        /// <param name="a_sKRZYZYK">Player KRZYZYK</param>
+        /// <param name="a_Winner">Winner of the match</param>
+        public void SaveGame(string a_sKOLKO, string a_sKRZYZYK, Character a_Winner)
         {
             //zapis w przypadku gdy plik jeszcze nie istnieje
             bool _bIsFileExist = true;
             string _sFirstLine = string.Empty;
-            int _iNextIndex = 0;
+            int _iNextIndex = 1;
             if (!File.Exists(FileName))
             {
                 _bIsFileExist = false;
-                _sFirstLine = $"[LP].[Winner].[Loser]. Po każdej informacji jest konieczna kropka!\n1.{a_Winner}.{a_Loser}.";
+                _sFirstLine = $"[LP].[Winner].[PlayerKOLKO].[PlayerKRZYZYK]. Po każdej informacji jest konieczna kropka!";
             }
             else
-                _iNextIndex = (int)Read(StatsOptions.NextIndex);
+                _iNextIndex = ReadNextIndex();
 
             using (StreamWriter sw = new StreamWriter(FileName, true))
             {
                 if (!_bIsFileExist)//jeżeli plik nie istniał zapisuje nagłówek wraz z rekordem
                     sw.WriteLine(_sFirstLine);
-                else//zapis rekordu do pliku
-                    sw.WriteLine($"{_iNextIndex}.{a_Winner}.{a_Loser}.");
+
+                //okreslenie zwycięscy - puste oznacza remis
+                string _sWinner = string.Empty;
+				switch (a_Winner)
+				{
+					case Character.KOLKO:
+                        _sWinner = a_sKOLKO;
+                        break;
+					case Character.KRZYZYK:
+                        _sWinner = a_sKRZYZYK;
+                        break;
+					case Character.EMPTY:
+                        _sWinner = " ";
+                        break;
+				}
+
+                sw.WriteLine($"{_iNextIndex}.{_sWinner}.{a_sKOLKO}.{a_sKRZYZYK}.");
             }
         }
     }

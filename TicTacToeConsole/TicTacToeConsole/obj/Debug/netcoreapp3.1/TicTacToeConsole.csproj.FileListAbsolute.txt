@@ -49,3 +49,15 @@ F:\VisualProj\Wiktor_Szczeszek\TicTacToeConsole\TicTacToeConsole\TicTacToeConsol
 F:\VisualProj\Wiktor_Szczeszek\TicTacToeConsole\TicTacToeConsole\TicTacToeConsole\obj\Debug\netcoreapp3.1\TicTacToeConsole.dll
 F:\VisualProj\Wiktor_Szczeszek\TicTacToeConsole\TicTacToeConsole\TicTacToeConsole\obj\Debug\netcoreapp3.1\TicTacToeConsole.pdb
 F:\VisualProj\Wiktor_Szczeszek\TicTacToeConsole\TicTacToeConsole\TicTacToeConsole\obj\Debug\netcoreapp3.1\TicTacToeConsole.genruntimeconfig.cache
+E:\WSB2\Programowanie obiektowe\TicTacToeConsole\TicTacToeConsole\TicTacToeConsole\bin\Debug\netcoreapp3.1\TicTacToeConsole.exe
+E:\WSB2\Programowanie obiektowe\TicTacToeConsole\TicTacToeConsole\TicTacToeConsole\bin\Debug\netcoreapp3.1\TicTacToeConsole.deps.json
+E:\WSB2\Programowanie obiektowe\TicTacToeConsole\TicTacToeConsole\TicTacToeConsole\bin\Debug\netcoreapp3.1\TicTacToeConsole.runtimeconfig.json
+E:\WSB2\Programowanie obiektowe\TicTacToeConsole\TicTacToeConsole\TicTacToeConsole\bin\Debug\netcoreapp3.1\TicTacToeConsole.runtimeconfig.dev.json
+E:\WSB2\Programowanie obiektowe\TicTacToeConsole\TicTacToeConsole\TicTacToeConsole\bin\Debug\netcoreapp3.1\TicTacToeConsole.dll
+E:\WSB2\Programowanie obiektowe\TicTacToeConsole\TicTacToeConsole\TicTacToeConsole\bin\Debug\netcoreapp3.1\TicTacToeConsole.pdb
+E:\WSB2\Programowanie obiektowe\TicTacToeConsole\TicTacToeConsole\TicTacToeConsole\obj\Debug\netcoreapp3.1\TicTacToeConsole.AssemblyInfoInputs.cache
+E:\WSB2\Programowanie obiektowe\TicTacToeConsole\TicTacToeConsole\TicTacToeConsole\obj\Debug\netcoreapp3.1\TicTacToeConsole.AssemblyInfo.cs
+E:\WSB2\Programowanie obiektowe\TicTacToeConsole\TicTacToeConsole\TicTacToeConsole\obj\Debug\netcoreapp3.1\TicTacToeConsole.csproj.CoreCompileInputs.cache
+E:\WSB2\Programowanie obiektowe\TicTacToeConsole\TicTacToeConsole\TicTacToeConsole\obj\Debug\netcoreapp3.1\TicTacToeConsole.dll
+E:\WSB2\Programowanie obiektowe\TicTacToeConsole\TicTacToeConsole\TicTacToeConsole\obj\Debug\netcoreapp3.1\TicTacToeConsole.pdb
+E:\WSB2\Programowanie obiektowe\TicTacToeConsole\TicTacToeConsole\TicTacToeConsole\obj\Debug\netcoreapp3.1\TicTacToeConsole.genruntimeconfig.cache

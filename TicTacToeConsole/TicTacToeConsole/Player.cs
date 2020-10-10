@@ -13,20 +13,23 @@ namespace TicTacToeConsole
 			string _sName;
 			do
 			{
-				_sName = string.Empty;
 				Console.ResetColor();
 				Console.Clear();
 
 				Console.WriteLine("GRACZ " + a_Character);
 				Console.Write("Podaj nazwę: ");
 				Console.ForegroundColor = ConsoleColor.Green;
-			} while ((_sName = Console.ReadLine()).Contains('.') || _sName == string.Empty);
+			} while ((_sName = Console.ReadLine()).Contains('.') || _sName.Contains(' ') || _sName == string.Empty);
 
 			Console.ResetColor();
 			Name = _sName;
 			Character = a_Character;
 		}
 
+		/// <summary>
+		/// Get char of character
+		/// </summary>
+		/// <returns>A char</returns>
 		public char GetCharacterChar()
 		{
 			switch (Character)
@@ -40,6 +43,10 @@ namespace TicTacToeConsole
 			}
 		}
 
+		/// <summary>
+		/// Get value of character
+		/// </summary>
+		/// <returns>A value</returns>
 		public int GetCharacterValue()
 		{
 			switch (Character)

@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using TicTacToeConsole.Interfaces;
 
 namespace TicTacToeConsole
@@ -14,12 +12,15 @@ namespace TicTacToeConsole
 			CurrentPlayer = a_PlayerKOLKO.GetCharacterValue();
 		}
 
+		/// <summary>
+		/// Main game method
+		/// </summary>
 		public void StartGame()
 		{
 			Console.Clear();
 
 			//rysowanie nagłówka
-			DrawHeader(new Coordinates { X = 3, Y = Header_Y }, 2, ConsoleColor.Blue);
+			DrawHeader(new Coordinates { X = 3, Y = Header_Y }, 2, ConsoleColor.Red);
 
 			//rysowanie planszy do gry
 			DrawPlayBoard(new Coordinates { X = 0, Y = Board_Y });
@@ -63,18 +64,21 @@ namespace TicTacToeConsole
 			{
 				Console.Clear();
 				if (_i == 10)
-					Console.WriteLine("REMIS!");
-				else
 				{
-					Player _Winner = GetCurrentPlayer(CurrentPlayer);
-					SwitchPlayers();
-					Player _Loser = GetCurrentPlayer(CurrentPlayer);
-
-					Console.WriteLine($"WYGRAL GRACZ {_Winner.Name} - {_Winner.GetCharacterChar()}");
+					Console.WriteLine("REMIS!");
 
 					//zapisanie danych do pliku
 					Statistics statistics = new Statistics();
-					statistics.SaveGame(_Winner.Name, _Loser.Name);
+					statistics.SaveGame(PlayerKOLKO.Name, PlayerKRZYZYK.Name, Character.EMPTY);
+				}
+				else
+				{
+					Player _Winner = GetCurrentPlayer(CurrentPlayer);
+					Console.WriteLine($"WYGRAL GRACZ {_Winner.Name} - {_Winner.Character}");
+
+					//zapisanie danych do pliku
+					Statistics statistics = new Statistics();
+					statistics.SaveGame(PlayerKOLKO.Name, PlayerKRZYZYK.Name, _Winner.Character);
 				}
 
 				Console.WriteLine("(Wcisnij dowolny klawisz, aby wrocic do menu)");
@@ -82,6 +86,10 @@ namespace TicTacToeConsole
 			}
 		}
 
+		/// <summary>
+		/// Checks player win
+		/// </summary>
+		/// <returns>Information about win</returns>
 		public bool CheckResult()
 		{
 			for (int y = 0; y < 3; y++)
@@ -109,6 +117,11 @@ namespace TicTacToeConsole
 			return false;
 		}
 
+		/// <summary>
+		/// Convert valid keys to integer values
+		/// </summary>
+		/// <param name="a_Key">Key to parse</param>
+		/// <returns>An integer value</returns>
 		private int ConvertKeyToInt(ConsoleKey a_Key)
         {
             switch (a_Key)
@@ -130,6 +143,13 @@ namespace TicTacToeConsole
 			}
         }
 
+		/// <summary>
+		/// Check propriety of player input
+		/// </summary>
+		/// <param name="a_InsertingPlace">Coordinates to insert</param>
+		/// <param name="a_sErrorMessag">Message shows when input is incorrect</param>
+		/// <param name="a_MessagePlace">Coordinates to show error message</param>
+		/// <returns>A valid console key entered by the player</returns>
 		private ConsoleKey CheckInsert(Coordinates a_InsertingPlace, string a_sErrorMessag, Coordinates a_MessagePlace)
         {
 			ConsoleKey _Key;
@@ -137,8 +157,7 @@ namespace TicTacToeConsole
 			do
 			{
 				//usunięcie nie zatwierdzonego klawisza z konsoli
-				Console.SetCursorPosition(a_InsertingPlace.X, a_InsertingPlace.Y);
-                Console.Write("          ");
+				RemoveTextArea(a_InsertingPlace, new Coordinates { X = a_InsertingPlace.X + 10, Y = a_InsertingPlace.Y });
 				Console.SetCursorPosition(a_InsertingPlace.X, a_InsertingPlace.Y);
 
 				//wczytanie klawisza od uzytkownika oraz sprawdzenie go
@@ -156,6 +175,11 @@ namespace TicTacToeConsole
 			return _Key;
         }
 
+		/// <summary>
+		/// Player input
+		/// </summary>
+		/// <param name="a_ComunicationPlace">Coordinates pointing where the error message</param>
+		/// <returns>Error output - escape key returns -1 and -1</returns>
 		private Coordinates InsertData(Coordinates a_ComunicationPlace)
 		{
 			Console.SetCursorPosition(a_ComunicationPlace.X, a_ComunicationPlace.Y);
@@ -165,7 +189,7 @@ namespace TicTacToeConsole
 			Console.ResetColor();
 
 			//usuwanie starych logów
-			RemoveTextArea(new Coordinates { X = a_ComunicationPlace.X, Y = a_ComunicationPlace.Y + 2 }, new Coordinates { X = a_ComunicationPlace.X + 43, Y = a_ComunicationPlace.Y + 4 });
+			RemoveTextArea(new Coordinates { X = a_ComunicationPlace.X, Y = a_ComunicationPlace.Y + 2 }, new Coordinates { X = a_ComunicationPlace.X + 43, Y = a_ComunicationPlace.Y + 5 });
 
 			Console.SetCursorPosition(a_ComunicationPlace.X, a_ComunicationPlace.Y + 2);
 			Console.Write("Podaj kolumnę: ");
@@ -179,20 +203,26 @@ namespace TicTacToeConsole
 			return new Coordinates { X = ConvertKeyToInt(_Col), Y = ConvertKeyToInt(_Row) };
 		}
 
+		/// <summary>
+		/// Start inserting information for the player about where to place his character
+		/// </summary>
 		public void InsertCharactersInfo()
 		{
 			if (CurrentPlayer == 1)
 			{
 				WritePlayerName(PlayerKOLKO.Name, PlayerNameKOLKO_Place, ConsoleColor.Green);
-				WritePlayerName(PlayerKRZYZYK.Name, PlayerNameKRZYZYK_Place);
+				WritePlayerName(PlayerKRZYZYK.Name, PlayerNameKRZYZYK_Place, ConsoleColor.White);
 			}
             else
             {
-				WritePlayerName(PlayerKOLKO.Name, PlayerNameKOLKO_Place);
+				WritePlayerName(PlayerKOLKO.Name, PlayerNameKOLKO_Place, ConsoleColor.White);
 				WritePlayerName(PlayerKRZYZYK.Name, PlayerNameKRZYZYK_Place, ConsoleColor.Green);
 			}
 		}
 
+		/// <summary>
+		/// Switch player
+		/// </summary>
 		public void SwitchPlayers()
 		{
 			CurrentPlayer *= -1;
